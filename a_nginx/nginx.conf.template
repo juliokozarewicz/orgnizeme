@@ -34,7 +34,7 @@ http {
     }
 
     # security
-    # =================================================================
+    # ===================================================
 
     # Timeout for requests from slow clients
     client_body_timeout 10s;
@@ -87,10 +87,10 @@ http {
         application/xml
         application/rss+xml
         image/svg+xml;
-    # ================================================================= (end security)
+    # =================================================== (end security)
 
     # errors
-    # =================================================================
+    # ===================================================
     error_page
       400 401 402 403 404 405 406 407 408
       409 410 411 412 413 414 415 416 417
@@ -103,10 +103,10 @@ http {
       add_header Content-Type application/json;
       return 503 '{"status": "error", "code": 503, "message": "Service unavailable, we are investigating. Please try again later."}';
     }
-    # ================================================================= (end errors)
+    # =================================================== (end errors)
 
     # DOCUMENTATION
-    # =================================================================
+    # ===================================================
     # [ DOCUMENTATION - Swagger ]
         location /documentation/swagger {
           proxy_pass http://$PRIVATE_DOMAIN:$DOCUMENTATION_PORT;
@@ -134,19 +134,31 @@ http {
           proxy_set_header X-Forwarded-Proto scheme;
         }
 
-    # ================================================================= (end documentation)
+    # =================================================== (end documentation)
 
     # HELLO WORLD
-    # =================================================================
-    # [ HELLO WORLD ] /helloworld/helloworld
-    location /helloworld/helloworld {
-      proxy_pass http://$PRIVATE_DOMAIN:$HELLOWORLD_PORT;
-      proxy_set_header Host host;
-      proxy_set_header X-Real-IP remote_addr;
-      proxy_set_header X-Forwarded-For proxy_add_x_forwarded_for;
-      proxy_set_header X-Forwarded-Proto scheme;
-    }
-    # ================================================================= (end hello world)
+    # ===================================================
+    # [ HELLO WORLD - Helloworld ]
+        location /helloworld/helloworld {
+          proxy_pass http://$PRIVATE_DOMAIN:$HELLOWORLD_PORT;
+          proxy_set_header Host host;
+          proxy_set_header X-Real-IP remote_addr;
+          proxy_set_header X-Forwarded-For proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto scheme;
+        }
+    # =================================================== (end hello world)
+
+    # TASKS
+    # ===================================================
+    # [ TASKS - Create category ]
+        location /tasks/category/create {
+          proxy_pass http://$PRIVATE_DOMAIN:$TASKS_PORT;
+          proxy_set_header Host host;
+          proxy_set_header X-Real-IP remote_addr;
+          proxy_set_header X-Forwarded-For proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto scheme;
+        }
+    # =================================================== (end tasks)
 
   }
 
