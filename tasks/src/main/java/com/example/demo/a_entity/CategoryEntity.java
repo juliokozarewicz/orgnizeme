@@ -14,7 +14,7 @@ public class CategoryEntity {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
-    @Column(name = "categoria", nullable = false, length = 100)
+    @Column(name = "category_name", nullable = false, length = 100)
     private String categoryName;
 
     // constructor

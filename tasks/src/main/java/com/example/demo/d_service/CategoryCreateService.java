@@ -43,9 +43,13 @@ public class CategoryCreateService {
         customLinks.put("next", "/tasks/category/list");
 
         StandardResponse response = new StandardResponse.Builder()
-            .statusCode(200)
+            .statusCode(201)
             .statusMessage("success")
-            .message(validatedBody.categoryName())
+            .message(
+                messageSource.getMessage(
+                    "category_created_success", null, locale
+                )
+            )
             .links(customLinks)
             .build();
 
