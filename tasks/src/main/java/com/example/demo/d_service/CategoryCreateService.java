@@ -1,5 +1,7 @@
 package com.example.demo.d_service;
 
+import com.example.demo.a_entity.CategoryEntity;
+import com.example.demo.b_repository.CategoryRepository;
 import com.example.demo.c_validation.CategoryCreateValidation;
 import com.example.demo.f_utils.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,10 @@ public class CategoryCreateService {
     @Autowired
     private MessageSource messageSource;
 
+    // database
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     public ResponseEntity execute(
         CategoryCreateValidation validatedBody
     ) {
@@ -26,10 +32,15 @@ public class CategoryCreateService {
         // language
         Locale locale = LocaleContextHolder.getLocale();
 
+        // record category
+        CategoryEntity categoryEntity = CategoryEntity
+            .createCategory(validatedBody.categoryName());
+        categoryRepository.save(categoryEntity);
+
         // response (json)
         Map<String, String> customLinks = new LinkedHashMap<>();
         customLinks.put("self", "/tasks/category/create");
-        customLinks.put("next", "/documentation/swagger");
+        customLinks.put("next", "/tasks/category/list");
 
         StandardResponse response = new StandardResponse.Builder()
             .statusCode(200)
