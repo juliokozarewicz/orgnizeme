@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping()
 class DocumentationController {
+
+    @Value("${APPLICATION_TITLE}")
+    private String applicationTitle;
 
     @GetMapping(
         value = "/documentation/json",
@@ -29,7 +33,7 @@ class DocumentationController {
     public String getSwaggerUi() {
         return "<html>\n" +
             "<head>\n" +
-            "<title>Swagger UI</title>\n" +
+            "<title>" + applicationTitle + "</title>\n" +
             "<script src='https://cdn.jsdelivr.net/npm/swagger-ui-dist@3.52.5/swagger-ui-bundle.js'></script>\n" +
             "<link rel='stylesheet' type='text/css' href='https://cdn.jsdelivr.net/npm/swagger-ui-dist@3.52.5/swagger-ui.css' />\n" +
             "<style>\n" +
@@ -58,7 +62,7 @@ class DocumentationController {
     public String getRedocUi() {
         return "<html>\n" +
             "<head>\n" +
-            "<title>Redoc UI</title>\n" +
+            "<title>" + applicationTitle + "</title>\n" +
             "<script src='https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js'></script>\n" +
             "<style>\n" +
             "  #redoc-container {\n" +
