@@ -36,7 +36,9 @@ out/
 
 ### VS Code ###
 .vscode/
-/b_documentation/src/main/resources/logs/logfile.log.2025-02-17.0.gz
-/helloworld/src/main/resources/logs/logfile.log
-/b_documentation/src/main/resources/logs/logfile.log
-/tasks/src/main/resources/logs/logfile.log
+*/src/main/resources/logs/logfile.log
+*/src/main/resources/logs/logfile.*.gz
+
+### Others ###
+*/src/main/resources/logs/logfile.log
+*/src/main/resources/logs/logfile.*.gz
