@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -31,6 +32,22 @@ public class CategoryCreateService {
 
         // language
         Locale locale = LocaleContextHolder.getLocale();
+
+        // verify category
+        List<CategoryEntity> existingCategory = categoryRepository.findByCategoryName(validatedBody.categoryName());
+
+        if (!existingCategory.isEmpty()) {
+            // call custom error
+            Map<String, Object> errorDetails = new LinkedHashMap<>();
+            errorDetails.put("errorCode", 409);
+            errorDetails.put(
+                "message",
+                messageSource.getMessage(
+                    "category_created_conflict", null, locale
+                )
+            );
+            throw new RuntimeException(errorDetails.toString());
+        }
 
         // record category
         CategoryEntity categoryEntity = CategoryEntity
