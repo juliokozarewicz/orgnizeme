@@ -74,7 +74,7 @@
       "post": {
         "summary": "Create a new category",
         "description": "Creates a new category after validating the name and ensuring that there is no conflict with an existing category.",
-        "tags": ["Category"],
+        "tags": ["CATEGORY"],
         "parameters": [],
         "requestBody": {
           "required": true,
