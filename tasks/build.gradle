@@ -37,14 +37,6 @@ dependencies {
 	implementation "org.flywaydb:flyway-database-postgresql:10.15.0"
 }
 
-flyway {
-	url = 'jdbc:${DATABASE_TYPE}://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}'
-	user = '${DATABASE_USER}'
-	password = '${DATABASE_PASSWORD}!'
-	locations = ['classpath:/src/main/resources/migrations']
-	schemas = ['public']
-}
-
 tasks.named('test') {
 	useJUnitPlatform()
 }
