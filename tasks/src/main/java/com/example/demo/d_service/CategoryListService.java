@@ -1,9 +1,8 @@
 package com.example.demo.d_service;
 
-import com.example.demo.a_entity.CategoryEntity;
 import com.example.demo.b_repository.CategoryRepository;
-import com.example.demo.f_utils.interfaces.CategoryProjection;
-import com.example.demo.f_utils.others.StandardResponse;
+import com.example.demo.utils.interfaces.CategoryProjection;
+import com.example.demo.utils.others.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -31,7 +30,8 @@ public class CategoryListService {
         // language
         Locale locale = LocaleContextHolder.getLocale();
 
-        List<CategoryProjection> allCategories = categoryRepository.findCategoryFiltered();
+        List<CategoryProjection> allCategories = categoryRepository
+            .findCategoryFiltered();
 
         // response (json)
         Map<String, String> customLinks = new LinkedHashMap<>();
