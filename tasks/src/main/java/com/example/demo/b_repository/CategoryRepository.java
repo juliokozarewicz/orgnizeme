@@ -9,6 +9,8 @@ import java.util.List;
 @Repository
 public interface CategoryRepository extends JpaRepository<CategoryEntity, UUID> {
 
+    List<CategoryEntity> findAll();
     List<CategoryEntity> findByCategoryName(String categoryName);
+
 
 }

@@ -12,6 +12,7 @@ public class StandardResponse {
         private String statusMessage;
         private String field;
         private String message;
+        private Object  data;
         private Map<String, String> links;
 
         private StandardResponse(Builder builder) {
@@ -21,6 +22,7 @@ public class StandardResponse {
                     builder.field;
                 this.message = builder.message.isEmpty() ? null :
                     builder.message;
+                this.data = builder.data;
                 this.links = builder.links.isEmpty() ? null : builder.links;
         }
 
@@ -40,6 +42,10 @@ public class StandardResponse {
                 return message;
         }
 
+        public Object getData() {
+                return data;
+        }
+
         public Map<String, String> getLinks() {
                 return links;
         }
@@ -50,6 +56,7 @@ public class StandardResponse {
                 private String statusMessage;
                 private String field = "";
                 private String message = "";
+                private Object data;
                 private Map<String, String> links = new HashMap<>();
 
                 public Builder statusCode(int statusCode) {
@@ -69,6 +76,11 @@ public class StandardResponse {
 
                 public Builder message(String message) {
                         this.message = message;
+                        return this;
+                }
+
+                public Builder data(Object data) {
+                        this.data = data;
                         return this;
                 }
 
