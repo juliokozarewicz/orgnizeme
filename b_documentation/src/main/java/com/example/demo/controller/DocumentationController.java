@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.utils.DocumentationJson;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
@@ -21,12 +22,12 @@ class DocumentationController {
     )
     public ResponseEntity<Object> handle() {
 
-        // Serve the OpenAPI JSON documentation
-        ClassPathResource jsonFile = new ClassPathResource("static/documentation.json");
+        DocumentationJson documentationJson = new DocumentationJson();
+        String docs = documentationJson.documentationText();
 
         return ResponseEntity.ok()
             .contentType(MediaType.APPLICATION_JSON)
-            .body(jsonFile);
+            .body(docs);
     }
 
     @GetMapping("/documentation/swagger")
