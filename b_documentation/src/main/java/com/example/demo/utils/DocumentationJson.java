@@ -201,7 +201,73 @@ public class DocumentationJson {
                                 }
                             }
                         }
-                    }
+                    },
+                    # ==========================================================
+                    "/tasks/category/list-all":{
+                        "get":{
+                            "summary":"Get all categories",
+                            "description":"Retrieves a list of all categories with their IDs and names.",
+                            "tags":[
+                                "CATEGORY"
+                            ],
+                            "responses":{
+                                "200":{
+                                    "description":"Successful response with category list.",
+                                    "content":{
+                                        "application/json":{
+                                            "schema":{
+                                                "type":"object",
+                                                "properties":{
+                                                    "statusCode":{
+                                                        "type":"integer",
+                                                        "example":200
+                                                    },
+                                                    "statusMessage":{
+                                                        "type":"string",
+                                                        "example":"success"
+                                                    },
+                                                    "message":{
+                                                        "type":"string",
+                                                        "example":"Data received successfully."
+                                                    },
+                                                    "data":{
+                                                        "type":"array",
+                                                        "items":{
+                                                            "type":"object",
+                                                            "properties":{
+                                                                "id":{
+                                                                    "type":"string",
+                                                                    "format":"uuid",
+                                                                    "example":"ddf76b28-84ac-4573-b00f-d8c1c6129bd3"
+                                                                },
+                                                                "categoryName":{
+                                                                    "type":"string",
+                                                                    "example":"credit card"
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "links":{
+                                                        "type":"object",
+                                                        "properties":{
+                                                            "self":{
+                                                                "type":"string",
+                                                                "example":"/tasks/category/list-all"
+                                                            },
+                                                            "next":{
+                                                                "type":"string",
+                                                                "example":"/tasks/category/update"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
                     # ==========================================================
                 }
             }
