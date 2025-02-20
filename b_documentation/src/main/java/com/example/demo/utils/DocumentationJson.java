@@ -23,8 +23,7 @@ public class DocumentationJson {
                     }
                 },
                 "paths":{
-                
-                
+
                     # HELLOWORLD
                     # ==========================================================
                     "/helloworld/helloworld":{

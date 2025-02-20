@@ -33,7 +33,11 @@ public class CategoryListService {
         List<CategoryProjection> allCategories = categoryRepository
             .findCategoryFiltered();
 
-        // response (json)
+        // response META
+        Map<String, Object> metaInfo = new LinkedHashMap<>();
+        metaInfo.put("totalItems", allCategories.size());
+
+        // response LINKS
         Map<String, String> customLinks = new LinkedHashMap<>();
         customLinks.put("self", "/tasks/category/list-all");
         customLinks.put("next", "/tasks/category/update");
@@ -47,6 +51,7 @@ public class CategoryListService {
                 )
             )
             .data(allCategories)
+            .meta(metaInfo)
             .links(customLinks)
             .build();
 
