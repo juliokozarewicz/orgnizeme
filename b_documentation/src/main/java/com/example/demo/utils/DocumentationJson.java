@@ -245,6 +245,14 @@ public class DocumentationJson {
                                                                 }
                                                             }
                                                         }
+                                                    },"meta":{
+                                                        "type":"object",
+                                                        "properties":{
+                                                            "totalItems":{
+                                                                "type":"number",
+                                                                "example":"1"
+                                                            },
+                                                        }
                                                     },
                                                     "links":{
                                                         "type":"object",
