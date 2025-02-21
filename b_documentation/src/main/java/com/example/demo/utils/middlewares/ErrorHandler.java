@@ -1,5 +1,6 @@
-package com.example.demo.utils;
+package com.example.demo.utils.middlewares;
 
+import com.example.demo.utils.others.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
