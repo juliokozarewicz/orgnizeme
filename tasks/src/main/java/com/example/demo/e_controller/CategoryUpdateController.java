@@ -24,9 +24,9 @@ class CategoryUpdateController {
     @PostMapping("${BASE_URL_TASKS:default}/category/update/{id}")
     public ResponseEntity handle(
 
-        @PathVariable UUIDValidation id,
+        @Valid @PathVariable UUIDValidation id,
 
-        @RequestBody CategoryUpdateValidation categoryUpdateValidation,
+        @Valid @RequestBody CategoryUpdateValidation categoryUpdateValidation,
         BindingResult bindingResult
 
     ) {
@@ -51,7 +51,7 @@ class CategoryUpdateController {
 
         // Validated data
         Map<String, Object> validatedData = new LinkedHashMap<>();
-        validatedData.put("id", id);
+        validatedData.put("id", id.UUID());
         validatedData.put(
             "newCategoryName", categoryUpdateValidation.newCategoryName())
         ;
