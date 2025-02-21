@@ -34,6 +34,8 @@ class CategoryUpdateController {
         // return validation errors
         if (bindingResult.hasErrors()) {
 
+            System.out.println("**********************************");
+
             // field error response
             Map<String, Object> response = new LinkedHashMap<>();
             response.put("errorCode", 400);
@@ -51,7 +53,7 @@ class CategoryUpdateController {
 
         // Validated data
         Map<String, Object> validatedData = new LinkedHashMap<>();
-        validatedData.put("id", id.UUID());
+        validatedData.put("id", id.id());
         validatedData.put(
             "newCategoryName", categoryUpdateValidation.newCategoryName())
         ;

@@ -1,6 +1,7 @@
 package com.example.demo.utils.middlewares;
 
 import com.example.demo.utils.others.StandardResponse;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,32 @@ public class ErrorHandler {
 
         try {
 
+            // validation error
+            if (error instanceof ConstraintViolationException) {
+
+                var violation = ((ConstraintViolationException) error)
+                    .getConstraintViolations().iterator().next();
+
+                // field name
+                String fieldName = violation.getPropertyPath().toString();
+                String[] fieldParts = fieldName.split("\\.");
+                String lastFieldName = fieldParts[fieldParts.length - 1];
+
+                // error validation message
+                String errorValidationMessage = violation.getMessage();
+
+                StandardResponse response = new StandardResponse.Builder()
+                    .statusCode(400)
+                    .statusMessage("error")
+                    .field(lastFieldName)
+                    .message(errorValidationMessage)
+                    .build();
+
+                return ResponseEntity
+                    .status(response.getStatusCode())
+                    .body(response);
+            }
+
             // get error itens
             String errorMessage = error.getMessage();
             if (errorMessage == null || errorMessage.isEmpty()) {
@@ -55,16 +82,9 @@ public class ErrorHandler {
             String errorCode = (String) errorMap.get("errorCode");
             String errorMessageDetail = (String) errorMap.get("message");
 
-            // field error (form)
-            String errorField = "";
-            if  (errorMap.get("field") != null) {
-                errorField = (String) errorMap.get("field");
-            }
-
             StandardResponse response = new StandardResponse.Builder()
                 .statusCode(Integer.parseInt(errorCode))
                 .statusMessage("error")
-                .field(errorField)
                 .message(errorMessageDetail)
                 .build();
 
