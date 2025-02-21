@@ -61,7 +61,7 @@ public class CategoryUpdateService {
 
         CategoryEntity categoryEntity = CategoryEntity
             .createCategory(
-                generatedUUID,
+                id,
                 nowTimestamp,
                 nowTimestamp,
                 newCategoryName
