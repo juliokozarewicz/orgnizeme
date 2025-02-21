@@ -111,8 +111,8 @@ public class ErrorHandler {
                 .build();
 
             return ResponseEntity
-            .status(response.getStatusCode())
-            .body(response);
+                .status(response.getStatusCode())
+                .body(response);
 
         } catch (Exception e) {
 
