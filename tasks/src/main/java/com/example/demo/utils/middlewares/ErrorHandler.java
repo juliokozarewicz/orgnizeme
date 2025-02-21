@@ -67,7 +67,6 @@ public class ErrorHandler {
                     .body(response);
             }
 
-
             // bad request
             if (error instanceof HttpMessageNotReadableException) {
 
