@@ -5,6 +5,7 @@ import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -37,6 +38,9 @@ public class ErrorHandler {
 
         try {
 
+            // locale
+            Locale locale = LocaleContextHolder.getLocale();
+
             // validation error
             if (error instanceof ConstraintViolationException) {
 
@@ -56,6 +60,25 @@ public class ErrorHandler {
                     .statusMessage("error")
                     .field(lastFieldName)
                     .message(errorValidationMessage)
+                    .build();
+
+                return ResponseEntity
+                    .status(response.getStatusCode())
+                    .body(response);
+            }
+
+
+            // bad request
+            if (error instanceof HttpMessageNotReadableException) {
+
+                StandardResponse response = new StandardResponse.Builder()
+                    .statusCode(400)
+                    .statusMessage("error")
+                    .message(
+                        messageSource.getMessage(
+                            "bad_request", null, locale
+                        )
+                    )
                     .build();
 
                 return ResponseEntity

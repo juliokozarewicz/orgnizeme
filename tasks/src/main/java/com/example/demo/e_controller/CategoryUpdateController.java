@@ -31,26 +31,6 @@ class CategoryUpdateController {
 
     ) {
 
-        // return validation errors
-        if (bindingResult.hasErrors()) {
-
-            System.out.println("**********************************");
-
-            // field error response
-            Map<String, Object> response = new LinkedHashMap<>();
-            response.put("errorCode", 400);
-            bindingResult.getAllErrors().forEach(error -> {
-                String field = (
-                    (org.springframework.validation.FieldError) error
-                ).getField();
-                String messageError = error.getDefaultMessage();
-                response.put("field", field);
-                response.put("message", messageError);
-            });
-
-            throw new RuntimeException(response.toString());
-        }
-
         // Validated data
         Map<String, Object> validatedData = new LinkedHashMap<>();
         validatedData.put("id", id.id());
