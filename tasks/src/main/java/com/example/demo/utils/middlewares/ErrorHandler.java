@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 public class ErrorHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(
-            ErrorHandler.class
+        ErrorHandler.class
     );
 
     // locale
@@ -33,7 +33,7 @@ public class ErrorHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity handleAllExceptions(
-            Exception error
+        Exception error
     ) {
 
         try {
@@ -127,7 +127,7 @@ public class ErrorHandler {
                 .statusMessage("error")
                 .message(
                     messageSource.getMessage(
-                    "server_error", null, locale
+                        "server_error", null, locale
                     )
                 )
                 .build();
