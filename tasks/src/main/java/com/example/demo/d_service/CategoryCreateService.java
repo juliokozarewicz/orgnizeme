@@ -10,10 +10,14 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class CategoryCreateService {
@@ -50,8 +54,17 @@ public class CategoryCreateService {
         }
 
         // record category
+        String generatedUUID = UUID.randomUUID().toString();
+        ZonedDateTime nowUtc = ZonedDateTime.now(ZoneOffset.UTC);
+        Timestamp nowTimestamp = Timestamp.from(nowUtc.toInstant());
+
         CategoryEntity categoryEntity = CategoryEntity
-            .createCategory(validatedBody.categoryName());
+            .createCategory(
+                generatedUUID,
+                nowTimestamp,
+                nowTimestamp,
+                validatedBody.categoryName()
+            );
         categoryRepository.save(categoryEntity);
 
         // response (json)
