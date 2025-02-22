@@ -59,7 +59,7 @@ public class CategoryCreateService {
         Timestamp nowTimestamp = Timestamp.from(nowUtc.toInstant());
 
         CategoryEntity categoryEntity = CategoryEntity
-            .createCategory(
+            .createUpdateCategory(
                 generatedUUID,
                 nowTimestamp,
                 nowTimestamp,

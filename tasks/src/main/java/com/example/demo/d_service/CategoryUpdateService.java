@@ -2,7 +2,6 @@ package com.example.demo.d_service;
 
 import com.example.demo.a_entity.CategoryEntity;
 import com.example.demo.b_repository.CategoryRepository;
-import com.example.demo.c_validation.CategoryUpdateValidation;
 import com.example.demo.utils.others.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -35,11 +34,28 @@ public class CategoryUpdateService {
 
         // Map vars
         String id = (String) validatedData.get("id");
-        String newCategoryName = (String) validatedData.get("newCategoryName");
+        String updateCategoryName = (String) validatedData.get("updateCategoryName");
+
+        // verify id
+        List<CategoryEntity> existingId = categoryRepository
+            .findById(id);
+
+        if (existingId.isEmpty()) {
+            // call custom error
+            Map<String, Object> errorDetails = new LinkedHashMap<>();
+            errorDetails.put("errorCode", 404);
+            errorDetails.put(
+                "message",
+                messageSource.getMessage(
+                    "category_not_found", null, locale
+                )
+            );
+            throw new RuntimeException(errorDetails.toString());
+        }
 
         // verify category
         List<CategoryEntity> existingCategory = categoryRepository
-            .findByCategoryName(newCategoryName);
+            .findByCategoryName(updateCategoryName);
 
         if (!existingCategory.isEmpty()) {
             // call custom error
@@ -60,25 +76,25 @@ public class CategoryUpdateService {
         Timestamp nowTimestamp = Timestamp.from(nowUtc.toInstant());
 
         CategoryEntity categoryEntity = CategoryEntity
-            .createCategory(
+            .createUpdateCategory(
                 id,
                 nowTimestamp,
                 nowTimestamp,
-                newCategoryName
+                updateCategoryName
             );
         categoryRepository.save(categoryEntity);
 
         // response (json)
         Map<String, String> customLinks = new LinkedHashMap<>();
-        customLinks.put("self", "/tasks/category/update/{updateId}");
+        customLinks.put("self", "/tasks/category/update/" + id.toString());
         customLinks.put("next", "/tasks/category/list");
 
         StandardResponse response = new StandardResponse.Builder()
-            .statusCode(201)
+            .statusCode(200)
             .statusMessage("success")
             .message(
                 messageSource.getMessage(
-                    "category_created_success", null, locale
+                    "category_updated_success", null, locale
                 )
             )
             .links(customLinks)

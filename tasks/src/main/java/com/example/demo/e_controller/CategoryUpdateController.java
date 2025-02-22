@@ -35,7 +35,7 @@ class CategoryUpdateController {
         Map<String, Object> validatedData = new LinkedHashMap<>();
         validatedData.put("id", id.id());
         validatedData.put(
-            "newCategoryName", categoryUpdateValidation.newCategoryName())
+            "updateCategoryName", categoryUpdateValidation.updateCategoryName())
         ;
 
         return CategoryUpdateService.execute(validatedData);

@@ -23,6 +23,7 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, UUID> 
     // find category by name
     List<CategoryEntity> findByCategoryName(String categoryName);
 
-    // update category by id and categoryName
+    // find category by name
+    List<CategoryEntity> findById(String id);
 
 }

@@ -5,8 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
 
@@ -42,7 +40,7 @@ public class CategoryEntity {
     }
 
     // methods
-    public static CategoryEntity createCategory(
+    public static CategoryEntity createUpdateCategory(
         String id,
         Timestamp createdAt,
         Timestamp updatedAt,
