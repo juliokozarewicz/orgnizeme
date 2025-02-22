@@ -21,7 +21,7 @@ class CategoryUpdateController {
     @Autowired
     private CategoryUpdateService CategoryUpdateService;
 
-    @PostMapping("${BASE_URL_TASKS:default}/category/update/{id}")
+    @PutMapping("${BASE_URL_TASKS:default}/category/update/{id}")
     public ResponseEntity handle(
 
         @Valid @PathVariable UUIDValidation id,

@@ -277,7 +277,7 @@ public class DocumentationJson {
                     },
                     # ==========================================================
                     "/tasks/category/update/{id}": {
-                        "post": {
+                        "put": {
                             "summary": "Update Category",
                             "description": "Updates an existing category by its ID. The category name to be updated is provided in the request body. The ID and updated category name are validated before updating the category in the database.",
                             "tags": [
