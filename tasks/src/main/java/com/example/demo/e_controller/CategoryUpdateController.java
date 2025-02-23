@@ -19,7 +19,7 @@ import java.util.Map;
 class CategoryUpdateController {
 
     @Autowired
-    private CategoryUpdateService CategoryUpdateService;
+    private CategoryUpdateService categoryUpdateService;
 
     @PutMapping("${BASE_URL_TASKS:default}/category/update/{id}")
     public ResponseEntity handle(
@@ -38,7 +38,7 @@ class CategoryUpdateController {
             "updateCategoryName", categoryUpdateValidation.updateCategoryName())
         ;
 
-        return CategoryUpdateService.execute(validatedData);
+        return categoryUpdateService.execute(validatedData);
 
     }
 

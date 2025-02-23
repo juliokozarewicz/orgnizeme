@@ -6,6 +6,8 @@ import org.hibernate.validator.constraints.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Repository
@@ -25,5 +27,9 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, UUID> 
 
     // find category by name
     List<CategoryEntity> findById(String id);
+
+    // delete category by name
+    @Transactional
+    void deleteById(String id);
 
 }
