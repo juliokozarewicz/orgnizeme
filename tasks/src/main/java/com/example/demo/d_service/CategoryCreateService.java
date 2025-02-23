@@ -38,7 +38,8 @@ public class CategoryCreateService {
         Locale locale = LocaleContextHolder.getLocale();
 
         // verify category
-        List<CategoryEntity> existingCategory = categoryRepository.findByCategoryName(validatedBody.categoryName());
+        List<CategoryEntity> existingCategory = categoryRepository
+            .findByCategoryName(validatedBody.categoryName().trim());
 
         if (!existingCategory.isEmpty()) {
             // call custom error
@@ -67,6 +68,10 @@ public class CategoryCreateService {
             );
         categoryRepository.save(categoryEntity);
 
+        // response META
+        Map<String, Object> metaInfo = new LinkedHashMap<>();
+        metaInfo.put("idCreated", generatedUUID);
+
         // response (json)
         Map<String, String> customLinks = new LinkedHashMap<>();
         customLinks.put("self", "/tasks/category/create");
@@ -80,6 +85,7 @@ public class CategoryCreateService {
                     "category_created_success", null, locale
                 )
             )
+            .meta(metaInfo)
             .links(customLinks)
             .build();
 
