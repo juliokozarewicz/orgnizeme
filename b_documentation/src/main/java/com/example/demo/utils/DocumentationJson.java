@@ -136,6 +136,15 @@ public class DocumentationJson {
                                                         "type":"string",
                                                         "example":"Category successfully created"
                                                     },
+                                                    "meta":{
+                                                        "type":"object",
+                                                        "properties":{
+                                                            "idCreated":{
+                                                                "type":"string",
+                                                                "example":"e4dfb75e-9b1e-4d4f-82f1-c5ddd844ba6c"
+                                                            }
+                                                        }
+                                                    },
                                                     "links":{
                                                         "type":"object",
                                                         "properties":{
