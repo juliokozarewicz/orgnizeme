@@ -15,15 +15,12 @@ import java.util.UUID;
 public class TaskEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
-    private UUID id;
+    private String id;
 
-    @CreationTimestamp
     @Column(name = "created_at", updatable = false, nullable = false)
     private Timestamp createdAt;
 
-    @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
     private Timestamp updatedAt;
 
@@ -47,22 +44,26 @@ public class TaskEntity {
 
     // constructor
     public TaskEntity(
-        String categoryName,
-        Date dueDate
+        String id,
+        Timestamp createdAt,
+        Timestamp updatedAt
     ) {
-        this.category = categoryName;
-        this.dueDate = dueDate;
+        this.id = id;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     // methods
-    public static TaskEntity createCategory(
-        String categoryName,
-        Date dueDate
+    public static TaskEntity createUpdateTask(
+        String id,
+        Timestamp createdAt,
+        Timestamp updatedAt
     ) {
 
         return new TaskEntity(
-            categoryName,
-            dueDate
+            id,
+            createdAt,
+            updatedAt
         );
 
     }
