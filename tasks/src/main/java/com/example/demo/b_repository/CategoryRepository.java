@@ -25,10 +25,10 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, UUID> 
     // find category by name
     List<CategoryEntity> findByCategoryName(String categoryName);
 
-    // find category by name
+    // find category by id
     List<CategoryEntity> findById(String id);
 
-    // delete category by name
+    // delete category by id
     @Transactional
     void deleteById(String id);
 

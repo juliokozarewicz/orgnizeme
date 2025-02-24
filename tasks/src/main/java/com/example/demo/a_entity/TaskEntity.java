@@ -1,17 +1,20 @@
 package com.example.demo.a_entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.UUID;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "category")
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString
+@Table(name = "task")
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
 public class TaskEntity {
 
     @Id
@@ -19,12 +22,12 @@ public class TaskEntity {
     private String id;
 
     @Column(name = "created_at", updatable = false, nullable = false)
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false)
-    private Timestamp updatedAt;
+    private LocalDateTime updatedAt;
 
-    @Column(name = "task", nullable = false, length = 255)
+    @Column(name = "taskName", nullable = false, length = 255)
     private String taskName;
 
     @Column(name = "description", nullable = false, length = 1000)
@@ -40,31 +43,29 @@ public class TaskEntity {
     private String status;
 
     @Column(name = "due_date")
-    private Date dueDate;
+    private LocalDate dueDate;
 
     // constructor
     public TaskEntity(
         String id,
-        Timestamp createdAt,
-        Timestamp updatedAt
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt,
+        String taskName,
+        String description,
+        String category,
+        String priority,
+        String status,
+        LocalDate dueDate
     ) {
         this.id = id;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.taskName = taskName;
+        this.description = description;
+        this.category = category;
+        this.priority = priority;
+        this.status = status;
+        this.dueDate = dueDate;
     }
 
-    // methods
-    public static TaskEntity createUpdateTask(
-        String id,
-        Timestamp createdAt,
-        Timestamp updatedAt
-    ) {
-
-        return new TaskEntity(
-            id,
-            createdAt,
-            updatedAt
-        );
-
-    }
 }

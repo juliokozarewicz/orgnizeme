@@ -22,13 +22,13 @@ public interface TaskRepository extends JpaRepository<TaskEntity, UUID> {
     )
     List<CategoryProjection> findTaskFiltered();
 
-    // find category by name
+    // find task by name
     List<TaskEntity> findByTaskName(String taskName);
 
-    // find category by name
-    List<TaskEntity> findByI1d(String id);
+    // find task by id
+    List<TaskEntity> findById(String id);
 
-    // delete category by name
+    // delete task by id
     @Transactional
     void deleteById(String id);
 

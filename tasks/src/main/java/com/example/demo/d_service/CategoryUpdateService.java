@@ -71,18 +71,17 @@ public class CategoryUpdateService {
         }
 
         // record category
-        String generatedUUID = UUID.randomUUID().toString();
         ZonedDateTime nowUtc = ZonedDateTime.now(ZoneOffset.UTC);
         Timestamp nowTimestamp = Timestamp.from(nowUtc.toInstant());
 
-        CategoryEntity categoryEntity = CategoryEntity
-            .createUpdateCategory(
-                id,
-                nowTimestamp,
-                nowTimestamp,
-                updateCategoryName
-            );
-        categoryRepository.save(categoryEntity);
+        // Save the new category to the DB
+        CategoryEntity newCategory = new CategoryEntity(
+            id,
+            nowTimestamp.toLocalDateTime(),
+            nowTimestamp.toLocalDateTime(),
+            updateCategoryName.trim()
+        );
+        categoryRepository.save(newCategory);
 
         // response (json)
         Map<String, String> customLinks = new LinkedHashMap<>();

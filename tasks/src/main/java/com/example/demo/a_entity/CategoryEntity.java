@@ -6,11 +6,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "category")
-@Getter @Setter @NoArgsConstructor @ToString
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
 public class CategoryEntity {
 
     @Id
@@ -18,41 +21,23 @@ public class CategoryEntity {
     private String id;
 
     @Column(name = "created_at", updatable = false, nullable = false)
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false)
-    private Timestamp updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(name = "category_name", nullable = false, length = 100)
     private String categoryName;
 
-    // constructor
     public CategoryEntity(
         String id,
-        Timestamp createdAt,
-        Timestamp updatedAt,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt,
         String categoryName
-        ) {
+    ) {
         this.id = id;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.categoryName = categoryName;
-    }
-
-    // methods
-    public static CategoryEntity createUpdateCategory(
-        String id,
-        Timestamp createdAt,
-        Timestamp updatedAt,
-        String categoryName
-    ) {
-
-        return new CategoryEntity(
-            id,
-            createdAt,
-            updatedAt,
-            categoryName
-        );
-
     }
 }

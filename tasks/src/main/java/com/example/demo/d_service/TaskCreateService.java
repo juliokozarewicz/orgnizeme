@@ -1,8 +1,8 @@
 package com.example.demo.d_service;
 
-import com.example.demo.a_entity.CategoryEntity;
-import com.example.demo.b_repository.CategoryRepository;
-import com.example.demo.c_validation.CategoryCreateValidation;
+import com.example.demo.a_entity.TaskEntity;
+import com.example.demo.b_repository.TaskRepository;
+import com.example.demo.c_validation.TaskCreateValidation;
 import com.example.demo.utils.others.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -11,16 +11,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
-public class CategoryCreateService {
+public class TaskCreateService {
 
     // locale
     @Autowired
@@ -28,27 +26,29 @@ public class CategoryCreateService {
 
     // database
     @Autowired
-    private CategoryRepository categoryRepository;
+    private TaskRepository taskRepository;
 
     public ResponseEntity execute(
-        CategoryCreateValidation validatedBody
+        TaskCreateValidation validatedBody
     ) {
 
         // language
         Locale locale = LocaleContextHolder.getLocale();
 
-        // verify category
-        List<CategoryEntity> existingCategory = categoryRepository
-            .findByCategoryName(validatedBody.categoryName().trim());
+        // verify task
+        // By task name #####
+        // By due date #####
+        List<TaskEntity> existingTask = taskRepository
+            .findByTaskName(validatedBody.taskName());
 
-        if (!existingCategory.isEmpty()) {
+        if (!existingTask.isEmpty()) {
             // call custom error
             Map<String, Object> errorDetails = new LinkedHashMap<>();
             errorDetails.put("errorCode", 409);
             errorDetails.put(
                 "message",
                 messageSource.getMessage(
-                    "category_created_conflict", null, locale
+                    "task_created_conflict", null, locale
                 )
             );
             throw new RuntimeException(errorDetails.toString());
@@ -59,14 +59,25 @@ public class CategoryCreateService {
         ZonedDateTime nowUtc = ZonedDateTime.now(ZoneOffset.UTC);
         Timestamp nowTimestamp = Timestamp.from(nowUtc.toInstant());
 
-        // Save the new category to the DB
-        CategoryEntity newCategory = new CategoryEntity(
+        // due date
+        LocalDate dueDate = validatedBody.dueDate()
+            .toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate();
+
+        // Save the new task to the DB
+        TaskEntity newTask = new TaskEntity(
             generatedUUID,
             nowTimestamp.toLocalDateTime(),
             nowTimestamp.toLocalDateTime(),
-            validatedBody.categoryName().trim()
+            validatedBody.taskName().trim(),
+            validatedBody.description().trim(),
+            validatedBody.category().trim(),
+            validatedBody.priority().trim(),
+            validatedBody.status().trim(),
+            dueDate
         );
-        categoryRepository.save(newCategory);
+        taskRepository.save(newTask);
 
         // response META
         Map<String, Object> metaInfo = new LinkedHashMap<>();
@@ -74,15 +85,15 @@ public class CategoryCreateService {
 
         // response (json)
         Map<String, String> customLinks = new LinkedHashMap<>();
-        customLinks.put("self", "/tasks/category/create");
-        customLinks.put("next", "/tasks/category/list");
+        customLinks.put("self", "/tasks/create");
+        customLinks.put("next", "/tasks/list");
 
         StandardResponse response = new StandardResponse.Builder()
             .statusCode(201)
             .statusMessage("success")
             .message(
                 messageSource.getMessage(
-                    "category_created_success", null, locale
+                    "task_created_success", null, locale
                 )
             )
             .meta(metaInfo)
