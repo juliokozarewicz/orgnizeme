@@ -574,11 +574,131 @@ public class DocumentationJson {
                                 }
                             }
                         }
-                    }
+                    },
+                    # ==========================================================
+                    "/tasks/create": {
+                        "post": {
+                            "summary": "Create Task",
+                            "description": "Creates a new task with the provided details. The request body must be validated to ensure all required fields are present and correctly formatted.",
+                            "tags": [
+                                "TASK"
+                            ],
+                            "requestBody": {
+                                "required": true,
+                                "content": {
+                                    "application/json": {
+                                        "schema": {
+                                            "type": "object",
+                                            "properties": {
+                                                "taskName": {
+                                                    "type": "string",
+                                                    "example": "Finish project report"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Complete the final report for the project."
+                                                },
+                                                "category": {
+                                                    "type": "string",
+                                                    "example": "Work"
+                                                },
+                                                "priority": {
+                                                    "type": "string",
+                                                    "example": "High"
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "Pending"
+                                                },
+                                                "dueDate": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2025-03-15"
+                                                }
+                                            },
+                                            "required": ["taskName", "description", "category", "priority", "status", "dueDate"]
+                                        }
+                                    }
+                                }
+                            },
+                            "responses": {
+                                "201": {
+                                    "description": "Successful response indicating the task was created.",
+                                    "content": {
+                                        "application/json": {
+                                            "schema": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "statusCode": {
+                                                        "type": "integer",
+                                                        "example": 201
+                                                    },
+                                                    "statusMessage": {
+                                                        "type": "string",
+                                                        "example": "success"
+                                                    },
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "Task successfully created."
+                                                    },
+                                                    "meta": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "idCreated": {
+                                                                "type": "string",
+                                                                "example": "6a42d0ff-2eda-4931-b930-30d68843f979"
+                                                            }
+                                                        }
+                                                    },
+                                                    "links": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "self": {
+                                                                "type": "string",
+                                                                "example": "/tasks/create"
+                                                            },
+                                                            "next": {
+                                                                "type": "string",
+                                                                "example": "/tasks/list"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "409": {
+                                    "description": "Conflict – The task already exists on the same date.",
+                                    "content": {
+                                        "application/json": {
+                                            "schema": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "statusCode": {
+                                                        "type": "integer",
+                                                        "example": 409
+                                                    },
+                                                    "statusMessage": {
+                                                        "type": "string",
+                                                        "example": "error"
+                                                    },
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "This task already exists."
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }            
+                    # ==========================================================
                     # ==========================================================
                 }
             }
-        
         """;
 
         return docs;

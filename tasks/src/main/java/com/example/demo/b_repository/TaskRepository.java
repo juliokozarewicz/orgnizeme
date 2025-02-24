@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -23,7 +24,7 @@ public interface TaskRepository extends JpaRepository<TaskEntity, UUID> {
     List<CategoryProjection> findTaskFiltered();
 
     // find task by name
-    List<TaskEntity> findByTaskName(String taskName);
+    List<TaskEntity> findByTaskNameAndDueDate(String taskName, LocalDate dueDate);
 
     // find task by id
     List<TaskEntity> findById(String id);

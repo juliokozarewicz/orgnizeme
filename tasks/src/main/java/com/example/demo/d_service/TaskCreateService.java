@@ -9,7 +9,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -35,11 +34,15 @@ public class TaskCreateService {
         // language
         Locale locale = LocaleContextHolder.getLocale();
 
+        // due date
+        LocalDate dueDate = validatedBody.dueDate()
+            .toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate();
+
         // verify task
-        // By task name #####
-        // By due date #####
         List<TaskEntity> existingTask = taskRepository
-            .findByTaskName(validatedBody.taskName());
+            .findByTaskNameAndDueDate(validatedBody.taskName(), dueDate);
 
         if (!existingTask.isEmpty()) {
             // call custom error
@@ -58,12 +61,6 @@ public class TaskCreateService {
         String generatedUUID = UUID.randomUUID().toString();
         ZonedDateTime nowUtc = ZonedDateTime.now(ZoneOffset.UTC);
         Timestamp nowTimestamp = Timestamp.from(nowUtc.toInstant());
-
-        // due date
-        LocalDate dueDate = validatedBody.dueDate()
-            .toInstant()
-            .atZone(ZoneId.systemDefault())
-            .toLocalDate();
 
         // Save the new task to the DB
         TaskEntity newTask = new TaskEntity(
