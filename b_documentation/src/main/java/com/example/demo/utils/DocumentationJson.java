@@ -691,6 +691,34 @@ public class DocumentationJson {
                                             }
                                         }
                                     }
+                                },
+                                "400": {
+                                    "description": "Bad Request – Validation error on the input data.",
+                                    "content": {
+                                        "application/json": {
+                                            "schema": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "statusCode": {
+                                                        "type": "integer",
+                                                        "example": 400
+                                                    },
+                                                    "statusMessage": {
+                                                        "type": "string",
+                                                        "example": "error"
+                                                    },
+                                                    "field": {
+                                                        "type": "string",
+                                                        "example": "description"
+                                                    },
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "Cannot be empty."
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -716,7 +744,7 @@ public class DocumentationJson {
                                 }
                             ],
                             "requestBody": {
-                                "required": true,
+                                "required": false,
                                 "content": {
                                     "application/json": {
                                         "schema": {
@@ -747,8 +775,7 @@ public class DocumentationJson {
                                                     "format": "date",
                                                     "example": "2025-03-15"
                                                 }
-                                            },
-                                            "required": ["taskName", "description", "category", "priority", "status", "dueDate"]
+                                            }
                                         }
                                     }
                                 }
@@ -833,6 +860,34 @@ public class DocumentationJson {
                                                     "message": {
                                                         "type": "string",
                                                         "example": "This task already exists on the same date."
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "400": {
+                                    "description": "Bad Request – Validation error on the input data.",
+                                    "content": {
+                                        "application/json": {
+                                            "schema": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "statusCode": {
+                                                        "type": "integer",
+                                                        "example": 400
+                                                    },
+                                                    "statusMessage": {
+                                                        "type": "string",
+                                                        "example": "error"
+                                                    },
+                                                    "field": {
+                                                        "type": "string",
+                                                        "example": "description"
+                                                    },
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "Cannot be empty."
                                                     }
                                                 }
                                             }
