@@ -37,7 +37,7 @@ public class CategoryUpdateService {
         String updateCategoryName = (String) validatedData.get("updateCategoryName");
 
         // verify id
-        List<CategoryEntity> existingId = categoryRepository
+        Optional<CategoryEntity> existingId = categoryRepository
             .findById(id);
 
         // id not found
@@ -55,7 +55,7 @@ public class CategoryUpdateService {
         }
 
         // verify category
-        List<CategoryEntity> existingCategory = categoryRepository
+        Optional<CategoryEntity> existingCategory = categoryRepository
             .findByCategoryName(updateCategoryName);
 
         if (!existingCategory.isEmpty()) {

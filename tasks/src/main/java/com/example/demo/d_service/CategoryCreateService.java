@@ -9,15 +9,10 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import java.sql.Timestamp;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class CategoryCreateService {
@@ -38,7 +33,7 @@ public class CategoryCreateService {
         Locale locale = LocaleContextHolder.getLocale();
 
         // verify category
-        List<CategoryEntity> existingCategory = categoryRepository
+        Optional<CategoryEntity> existingCategory = categoryRepository
             .findByCategoryName(validatedBody.categoryName().trim());
 
         if (!existingCategory.isEmpty()) {

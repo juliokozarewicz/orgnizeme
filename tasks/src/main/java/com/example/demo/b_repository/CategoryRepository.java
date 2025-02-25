@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<CategoryEntity, UUID> {
@@ -23,10 +24,10 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, UUID> 
     List<CategoryProjection> findCategoryFiltered();
 
     // find category by name
-    List<CategoryEntity> findByCategoryName(String categoryName);
+    Optional<CategoryEntity> findByCategoryName(String categoryName);
 
     // find category by id
-    List<CategoryEntity> findById(String id);
+    Optional<CategoryEntity> findById(String id);
 
     // delete category by id
     @Transactional

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface TaskRepository extends JpaRepository<TaskEntity, UUID> {
@@ -24,10 +25,10 @@ public interface TaskRepository extends JpaRepository<TaskEntity, UUID> {
     List<CategoryProjection> findTaskFiltered();
 
     // find task by name
-    List<TaskEntity> findByTaskNameAndDueDate(String taskName, LocalDate dueDate);
+    Optional<TaskEntity> findByTaskNameAndDueDate(String taskName, LocalDate dueDate);
 
     // find task by id
-    List<TaskEntity> findById(String id);
+    Optional<TaskEntity> findById(String id);
 
     // delete task by id
     @Transactional

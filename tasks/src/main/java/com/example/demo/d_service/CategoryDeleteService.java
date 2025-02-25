@@ -8,11 +8,10 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.sql.Timestamp;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class CategoryDeleteService {
@@ -36,7 +35,7 @@ public class CategoryDeleteService {
         String id = (String) validatedData.get("id");
 
         // verify id
-        List<CategoryEntity> existingId = categoryRepository
+        Optional<CategoryEntity> existingId = categoryRepository
             .findById(id);
 
         if (existingId.isEmpty()) {
@@ -54,7 +53,7 @@ public class CategoryDeleteService {
 
         // response (json)
         Map<String, String> customLinks = new LinkedHashMap<>();
-        customLinks.put("self", "/tasks/category/delete/" + id.toString());
+        customLinks.put("self", "/tasks/category/delete/" + id);
         customLinks.put("next", "/tasks/category/list");
 
         // delete by id

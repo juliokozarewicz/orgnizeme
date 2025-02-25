@@ -16,10 +16,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class TaskUpdateService {
@@ -40,14 +37,8 @@ public class TaskUpdateService {
         // language
         Locale locale = LocaleContextHolder.getLocale();
 
-        // due date
-        LocalDate dueDate = validatedBody.dueDate()
-            .toInstant()
-            .atZone(ZoneId.systemDefault())
-            .toLocalDate();
-
         // verify task
-        List<TaskEntity> existingTaskId = taskRepository
+        Optional<TaskEntity> existingTaskId = taskRepository
             .findById(id.id());
 
         // id not found
@@ -64,8 +55,15 @@ public class TaskUpdateService {
             throw new RuntimeException(errorDetails.toString());
         }
 
+        // due date
+        LocalDate dueDate = validatedBody.dueDate() != null
+            ? validatedBody.dueDate().toInstant()
+            .atZone(ZoneId.of("UTC"))
+            .toLocalDate()
+            : existingTaskId.get().getDueDate();
+
         // verify task
-        List<TaskEntity> existingTask = taskRepository
+        Optional<TaskEntity> existingTask = taskRepository
             .findByTaskNameAndDueDate(validatedBody.taskName(), dueDate);
 
         if (!existingTask.isEmpty()) {
@@ -85,15 +83,50 @@ public class TaskUpdateService {
         ZonedDateTime nowUtc = ZonedDateTime.now(ZoneOffset.UTC);
         Timestamp nowTimestamp = Timestamp.from(nowUtc.toInstant());
 
-        // Save the new task to the DB
+        // Save the new data
         TaskEntity newTask = TaskEntity.builder()
             .id(id.id())
             .updatedAt(nowTimestamp.toLocalDateTime())
-            .taskName(validatedBody.taskName().trim())
-            .description(validatedBody.description().trim())
-            .category(validatedBody.category().trim())
-            .priority(validatedBody.priority().trim())
-            .status(validatedBody.status().trim())
+            .taskName(
+                (
+                    validatedBody.taskName() != null &&
+                    !validatedBody.taskName().trim().isEmpty()
+                )
+                ? validatedBody.taskName().trim()
+                : existingTaskId.get().getTaskName()
+            )
+            .description(
+                (
+                    validatedBody.description() != null &&
+                    !validatedBody.description().trim().isEmpty()
+                )
+                ? validatedBody.description().trim()
+                : existingTaskId.get().getDescription()
+            )
+            .category(
+                (
+                    validatedBody.category() != null &&
+                    !validatedBody.category().trim().trim().isEmpty()
+                )
+                ? validatedBody.category().trim()
+                : existingTaskId.get().getCategory()
+            )
+            .priority(
+                (
+                    validatedBody.priority() != null &&
+                    !validatedBody.priority().trim().isEmpty()
+                )
+                ? validatedBody.priority().trim()
+                : existingTaskId.get().getPriority()
+            )
+            .status(
+                (
+                    validatedBody.status() !=null &&
+                    !validatedBody.status().trim().isEmpty()
+                )
+                ? validatedBody.status().trim()
+                : existingTaskId.get().getStatus()
+            )
             .dueDate(dueDate)
             .build();
 

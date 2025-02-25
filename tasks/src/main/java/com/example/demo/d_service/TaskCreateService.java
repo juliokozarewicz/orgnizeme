@@ -41,7 +41,7 @@ public class TaskCreateService {
             .toLocalDate();
 
         // verify task
-        List<TaskEntity> existingTask = taskRepository
+        Optional<TaskEntity> existingTask = taskRepository
             .findByTaskNameAndDueDate(validatedBody.taskName(), dueDate);
 
         if (!existingTask.isEmpty()) {
