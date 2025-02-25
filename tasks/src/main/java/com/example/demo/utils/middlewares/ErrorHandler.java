@@ -40,7 +40,7 @@ public class ErrorHandler {
         // locale
         Locale locale = LocaleContextHolder.getLocale();
 
-        // call custom error
+        // call error
         Map<String, Object> errorDetails = new LinkedHashMap<>();
         errorDetails.put("errorCode", errorCode);
         errorDetails.put("message", message);
