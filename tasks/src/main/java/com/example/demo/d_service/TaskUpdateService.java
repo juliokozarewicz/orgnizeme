@@ -4,6 +4,7 @@ import com.example.demo.a_entity.TaskEntity;
 import com.example.demo.b_repository.TaskRepository;
 import com.example.demo.c_validation.TaskUpdateValidation;
 import com.example.demo.c_validation.UUIDValidation;
+import com.example.demo.utils.middlewares.ErrorHandler;
 import com.example.demo.utils.others.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -29,6 +30,10 @@ public class TaskUpdateService {
     @Autowired
     private TaskRepository taskRepository;
 
+    // error handler
+    @Autowired
+    private ErrorHandler errorHandler;
+
     public ResponseEntity execute(
         UUIDValidation id,
         TaskUpdateValidation validatedBody
@@ -44,15 +49,12 @@ public class TaskUpdateService {
         // id not found
         if (existingTaskId.isEmpty()) {
             // call custom error
-            Map<String, Object> errorDetails = new LinkedHashMap<>();
-            errorDetails.put("errorCode", 404);
-            errorDetails.put(
-                "message",
+            errorHandler.customErrorThrow(
+                404,
                 messageSource.getMessage(
                     "task_not_found", null, locale
                 )
             );
-            throw new RuntimeException(errorDetails.toString());
         }
 
         // due date
@@ -68,15 +70,12 @@ public class TaskUpdateService {
 
         if (!existingTask.isEmpty()) {
             // call custom error
-            Map<String, Object> errorDetails = new LinkedHashMap<>();
-            errorDetails.put("errorCode", 409);
-            errorDetails.put(
-                "message",
+            errorHandler.customErrorThrow(
+                409,
                 messageSource.getMessage(
                     "task_created_conflict", null, locale
                 )
             );
-            throw new RuntimeException(errorDetails.toString());
         }
 
         // record category

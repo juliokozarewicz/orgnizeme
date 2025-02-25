@@ -2,6 +2,7 @@ package com.example.demo.d_service;
 
 import com.example.demo.a_entity.CategoryEntity;
 import com.example.demo.b_repository.CategoryRepository;
+import com.example.demo.utils.middlewares.ErrorHandler;
 import com.example.demo.utils.others.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -24,6 +25,10 @@ public class CategoryDeleteService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    // error handler
+    @Autowired
+    private ErrorHandler errorHandler;
+
     public ResponseEntity execute(
         Map<String, Object> validatedData
     ) {
@@ -40,15 +45,12 @@ public class CategoryDeleteService {
 
         if (existingId.isEmpty()) {
             // call custom error
-            Map<String, Object> errorDetails = new LinkedHashMap<>();
-            errorDetails.put("errorCode", 404);
-            errorDetails.put(
-                "message",
+            errorHandler.customErrorThrow(
+                404,
                 messageSource.getMessage(
                     "category_not_found", null, locale
                 )
             );
-            throw new RuntimeException(errorDetails.toString());
         }
 
         // response (json)

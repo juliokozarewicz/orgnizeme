@@ -3,6 +3,7 @@ package com.example.demo.d_service;
 import com.example.demo.a_entity.TaskEntity;
 import com.example.demo.b_repository.TaskRepository;
 import com.example.demo.c_validation.TaskCreateValidation;
+import com.example.demo.utils.middlewares.ErrorHandler;
 import com.example.demo.utils.others.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -27,6 +28,10 @@ public class TaskCreateService {
     @Autowired
     private TaskRepository taskRepository;
 
+    // error handler
+    @Autowired
+    private ErrorHandler errorHandler;
+
     public ResponseEntity execute(
         TaskCreateValidation validatedBody
     ) {
@@ -46,15 +51,12 @@ public class TaskCreateService {
 
         if (!existingTask.isEmpty()) {
             // call custom error
-            Map<String, Object> errorDetails = new LinkedHashMap<>();
-            errorDetails.put("errorCode", 409);
-            errorDetails.put(
-                "message",
+            errorHandler.customErrorThrow(
+                409,
                 messageSource.getMessage(
                     "task_created_conflict", null, locale
                 )
             );
-            throw new RuntimeException(errorDetails.toString());
         }
 
         // record category

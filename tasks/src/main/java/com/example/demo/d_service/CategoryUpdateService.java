@@ -2,6 +2,7 @@ package com.example.demo.d_service;
 
 import com.example.demo.a_entity.CategoryEntity;
 import com.example.demo.b_repository.CategoryRepository;
+import com.example.demo.utils.middlewares.ErrorHandler;
 import com.example.demo.utils.others.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -25,6 +26,10 @@ public class CategoryUpdateService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    // error handler
+    @Autowired
+    private ErrorHandler errorHandler;
+
     public ResponseEntity execute(
         Map<String, Object> validatedData
     ) {
@@ -43,15 +48,12 @@ public class CategoryUpdateService {
         // id not found
         if (existingId.isEmpty()) {
             // call custom error
-            Map<String, Object> errorDetails = new LinkedHashMap<>();
-            errorDetails.put("errorCode", 404);
-            errorDetails.put(
-                "message",
+            errorHandler.customErrorThrow(
+                404,
                 messageSource.getMessage(
                     "category_not_found", null, locale
                 )
             );
-            throw new RuntimeException(errorDetails.toString());
         }
 
         // verify category
@@ -60,15 +62,12 @@ public class CategoryUpdateService {
 
         if (!existingCategory.isEmpty()) {
             // call custom error
-            Map<String, Object> errorDetails = new LinkedHashMap<>();
-            errorDetails.put("errorCode", 409);
-            errorDetails.put(
-                "message",
+            errorHandler.customErrorThrow(
+                409,
                 messageSource.getMessage(
                     "category_created_conflict", null, locale
                 )
             );
-            throw new RuntimeException(errorDetails.toString());
         }
 
         // record category
