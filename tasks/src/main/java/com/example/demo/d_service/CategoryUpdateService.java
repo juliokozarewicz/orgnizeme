@@ -78,7 +78,6 @@ public class CategoryUpdateService {
         // Create a new CategoryEntity using builder
         CategoryEntity newCategory = CategoryEntity.builder()
             .id(id)
-            .createdAt(nowTimestamp.toLocalDateTime())
             .updatedAt(nowTimestamp.toLocalDateTime())
             .categoryName(updateCategoryName.trim())
             .build();

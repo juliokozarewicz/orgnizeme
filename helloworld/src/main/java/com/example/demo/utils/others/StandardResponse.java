@@ -1,18 +1,22 @@
 package com.example.demo.utils.others;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Getter
+@Setter
 public class StandardResponse {
 
         private int statusCode;
         private String statusMessage;
         private String field;
         private String message;
-        private Object data;
+        private Object  data;
         private Map<String, Object> meta;
         private Map<String, String> links;
 
@@ -26,34 +30,6 @@ public class StandardResponse {
                 this.data = builder.data;
                 this.meta = builder.meta.isEmpty() ? null : builder.meta;
                 this.links = builder.links.isEmpty() ? null : builder.links;
-        }
-
-        public int getStatusCode() {
-                return statusCode;
-        }
-
-        public String getStatusMessage() {
-                return statusMessage;
-        }
-
-        public String getField() {
-                return field;
-        }
-
-        public String getMessage() {
-                return message;
-        }
-
-        public Object getData() {
-                return data;
-        }
-
-        public Map<String, Object> getMeta() {
-                return meta;
-        }
-
-        public Map<String, String> getLinks() {
-                return links;
         }
 
         public static class Builder {

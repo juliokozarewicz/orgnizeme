@@ -88,7 +88,6 @@ public class TaskUpdateService {
         // Save the new task to the DB
         TaskEntity newTask = TaskEntity.builder()
             .id(id.id())
-            .createdAt(nowTimestamp.toLocalDateTime())
             .updatedAt(nowTimestamp.toLocalDateTime())
             .taskName(validatedBody.taskName().trim())
             .description(validatedBody.description().trim())
@@ -106,7 +105,7 @@ public class TaskUpdateService {
         customLinks.put("next", "/tasks/list");
 
         StandardResponse response = new StandardResponse.Builder()
-            .statusCode(201)
+            .statusCode(200)
             .statusMessage("success")
             .message(
                 messageSource.getMessage(

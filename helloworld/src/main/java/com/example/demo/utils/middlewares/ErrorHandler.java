@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -19,6 +18,7 @@ import java.util.Locale;
 // logs
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @RestControllerAdvice
 public class ErrorHandler {
@@ -68,7 +68,10 @@ public class ErrorHandler {
             }
 
             // bad request
-            if (error instanceof HttpMessageNotReadableException) {
+            if (
+                error instanceof HttpMessageNotReadableException ||
+                error instanceof NoResourceFoundException
+            ) {
 
                 StandardResponse response = new StandardResponse.Builder()
                     .statusCode(400)
@@ -83,6 +86,7 @@ public class ErrorHandler {
                 return ResponseEntity
                     .status(response.getStatusCode())
                     .body(response);
+
             }
 
             // get error itens

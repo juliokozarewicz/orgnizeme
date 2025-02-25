@@ -19,6 +19,7 @@ import java.util.Locale;
 // logs
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @RestControllerAdvice
 public class ErrorHandler {
@@ -68,7 +69,10 @@ public class ErrorHandler {
             }
 
             // bad request
-            if (error instanceof HttpMessageNotReadableException) {
+            if (
+                error instanceof HttpMessageNotReadableException ||
+                error instanceof NoResourceFoundException
+            ) {
 
                 StandardResponse response = new StandardResponse.Builder()
                     .statusCode(400)

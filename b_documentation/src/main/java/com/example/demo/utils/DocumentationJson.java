@@ -11,7 +11,7 @@ public class DocumentationJson {
                 "info":{
                     "title":"Todo Management API",
                     "version":"1.0",
-                    "description":"The Task Management API is a robust and easy-to-use service for managing tasks and to-do lists. This API provides endpoints to create, update, view, and delete tasks, making it ideal for both individual and team-based task tracking. It supports various features such as task prioritization, due dates, and categorization, helping to organize tasks effectively. The API also allows users to mark tasks as completed, offering the flexibility and functionality needed to manage all aspects of task management. \\n\\nEach service handles its errors independently, with translations available for supported languages. The gateway handles one error code in English, with no translation support:\\n\\n[ 1 ] - Service Unavailable (code 503):\\n\\n```json\\n{\\n  \\"status\\": \\"error\\",\\n  \\"code\\": 503,\\n  \\"message\\": \\"Service unavailable, we are investigating. Please try again later.\\"\\n}\\n```"
+                    "description":"The Task Management API is a robust and easy-to-use service for managing tasks and to-do lists. This API provides endpoints to create, update, view, and delete tasks, making it ideal for both individual and team-based task tracking. It supports various features such as task prioritization, due dates, and categorization, helping to organize tasks effectively. The API also allows users to mark tasks as completed, offering the flexibility and functionality needed to manage all aspects of task management."
                 },
                 "components":{
                     "securitySchemes":{
@@ -83,7 +83,7 @@ public class DocumentationJson {
                         }
                     },
                     # ==========================================================
-                    
+
                     # TASKS
                     # ==========================================================
                     "/tasks/category/create":{
@@ -694,7 +694,7 @@ public class DocumentationJson {
                                 }
                             }
                         }
-                    }            
+                    }
                     # ==========================================================
                     # ==========================================================
                 }
