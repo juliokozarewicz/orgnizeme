@@ -134,7 +134,7 @@ public class TaskUpdateService {
 
         // response (json)
         Map<String, String> customLinks = new LinkedHashMap<>();
-        customLinks.put("self", "/tasks/update");
+        customLinks.put("self", "/tasks/update/" + id.id());
         customLinks.put("next", "/tasks/list");
 
         StandardResponse response = new StandardResponse.Builder()

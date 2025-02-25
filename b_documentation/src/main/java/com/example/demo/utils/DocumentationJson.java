@@ -141,7 +141,7 @@ public class DocumentationJson {
                                                         "properties":{
                                                             "idCreated":{
                                                                 "type":"string",
-                                                                "example":"e4dfb75e-9b1e-4d4f-82f1-c5ddd844ba6c"
+                                                                "example":"{id}"
                                                             }
                                                         }
                                                     },
@@ -246,7 +246,7 @@ public class DocumentationJson {
                                                                 "id":{
                                                                     "type":"string",
                                                                     "format":"uuid",
-                                                                    "example":"ddf76b28-84ac-4573-b00f-d8c1c6129bd3"
+                                                                    "example":"{id}"
                                                                 },
                                                                 "categoryName":{
                                                                     "type":"string",
@@ -300,7 +300,7 @@ public class DocumentationJson {
                                     "description": "The UUID of the category to update.",
                                     "schema": {
                                         "type": "string",
-                                        "example": "a5d9f98b-2c49-42d8-99b5-dc02bcb7ed0a"
+                                        "example": "{id}"
                                     }
                                 }
                             ],
@@ -346,7 +346,7 @@ public class DocumentationJson {
                                                         "properties": {
                                                             "self": {
                                                                 "type": "string",
-                                                                "example": "/tasks/category/update/a5d9f98b-2c49-42d8-99b5-dc02bcb7ed0a"
+                                                                "example": "/tasks/category/update/{id}"
                                                             },
                                                             "next": {
                                                                 "type": "string",
@@ -454,7 +454,7 @@ public class DocumentationJson {
                                     "description": "The UUID of the category to delete.",
                                     "schema": {
                                         "type": "string",
-                                        "example": "a5d9f98b-2c49-42d8-99b5-dc02bcb7ed0a"
+                                        "example": "{id}"
                                     }
                                 }
                             ],
@@ -483,7 +483,7 @@ public class DocumentationJson {
                                                         "properties": {
                                                             "self": {
                                                                 "type": "string",
-                                                                "example": "/tasks/category/delete/a5d9f98b-2c49-42d8-99b5-dc02bcb7ed0a"
+                                                                "example": "/tasks/category/delete/{id}"
                                                             },
                                                             "next": {
                                                                 "type": "string",
@@ -646,7 +646,7 @@ public class DocumentationJson {
                                                         "properties": {
                                                             "idCreated": {
                                                                 "type": "string",
-                                                                "example": "6a42d0ff-2eda-4931-b930-30d68843f979"
+                                                                "example": "{id}"
                                                             }
                                                         }
                                                     },
@@ -686,6 +686,153 @@ public class DocumentationJson {
                                                     "message": {
                                                         "type": "string",
                                                         "example": "This task already exists."
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    # ==========================================================
+                    "/tasks/update/{id}": {
+                        "put": {
+                            "summary": "Update Task",
+                            "description": "Updates an existing task based on the provided task ID and updated details. The request body must contain the necessary fields for updating the task. If no changes are provided, the existing task details will remain unchanged.",
+                            "tags": [
+                                "TASK"
+                            ],
+                            "parameters": [
+                                {
+                                    "name": "id",
+                                    "in": "path",
+                                    "required": true,
+                                    "description": "The unique identifier of the task to be updated.",
+                                    "schema": {
+                                        "type": "string",
+                                        "example": "{id}"
+                                    }
+                                }
+                            ],
+                            "requestBody": {
+                                "required": true,
+                                "content": {
+                                    "application/json": {
+                                        "schema": {
+                                            "type": "object",
+                                            "properties": {
+                                                "taskName": {
+                                                    "type": "string",
+                                                    "example": "Finish project report"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Complete the final report for the project."
+                                                },
+                                                "category": {
+                                                    "type": "string",
+                                                    "example": "Work"
+                                                },
+                                                "priority": {
+                                                    "type": "string",
+                                                    "example": "High"
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "Pending"
+                                                },
+                                                "dueDate": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2025-03-15"
+                                                }
+                                            },
+                                            "required": ["taskName", "description", "category", "priority", "status", "dueDate"]
+                                        }
+                                    }
+                                }
+                            },
+                            "responses": {
+                                "200": {
+                                    "description": "Successful response indicating the task was updated.",
+                                    "content": {
+                                        "application/json": {
+                                            "schema": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "statusCode": {
+                                                        "type": "integer",
+                                                        "example": 200
+                                                    },
+                                                    "statusMessage": {
+                                                        "type": "string",
+                                                        "example": "success"
+                                                    },
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "Task successfully updated."
+                                                    },
+                                                    "links": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "self": {
+                                                                "type": "string",
+                                                                "example": "/tasks/update/{id}"
+                                                            },
+                                                            "next": {
+                                                                "type": "string",
+                                                                "example": "/tasks/list"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "404": {
+                                    "description": "Not Found – The task with the specified ID does not exist.",
+                                    "content": {
+                                        "application/json": {
+                                            "schema": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "statusCode": {
+                                                        "type": "integer",
+                                                        "example": 404
+                                                    },
+                                                    "statusMessage": {
+                                                        "type": "string",
+                                                        "example": "error"
+                                                    },
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "Task not found."
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "409": {
+                                    "description": "Conflict – The task already exists with the same name and due date.",
+                                    "content": {
+                                        "application/json": {
+                                            "schema": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "statusCode": {
+                                                        "type": "integer",
+                                                        "example": 409
+                                                    },
+                                                    "statusMessage": {
+                                                        "type": "string",
+                                                        "example": "error"
+                                                    },
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "This task already exists on the same date."
                                                     }
                                                 }
                                             }
