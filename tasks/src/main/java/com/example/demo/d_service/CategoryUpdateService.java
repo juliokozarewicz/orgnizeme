@@ -75,13 +75,14 @@ public class CategoryUpdateService {
         ZonedDateTime nowUtc = ZonedDateTime.now(ZoneOffset.UTC);
         Timestamp nowTimestamp = Timestamp.from(nowUtc.toInstant());
 
-        // Save the new category to the DB
-        CategoryEntity newCategory = new CategoryEntity(
-            id,
-            nowTimestamp.toLocalDateTime(),
-            nowTimestamp.toLocalDateTime(),
-            updateCategoryName.trim()
-        );
+        // Create a new CategoryEntity using builder
+        CategoryEntity newCategory = CategoryEntity.builder()
+            .id(id)
+            .createdAt(nowTimestamp.toLocalDateTime())
+            .updatedAt(nowTimestamp.toLocalDateTime())
+            .categoryName(updateCategoryName.trim())
+            .build();
+
         categoryRepository.save(newCategory);
 
         // response (json)

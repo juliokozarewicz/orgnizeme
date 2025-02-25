@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @ToString
 public class CategoryEntity {
 
@@ -29,15 +31,4 @@ public class CategoryEntity {
     @Column(name = "category_name", nullable = false, length = 100)
     private String categoryName;
 
-    public CategoryEntity(
-        String id,
-        LocalDateTime createdAt,
-        LocalDateTime updatedAt,
-        String categoryName
-    ) {
-        this.id = id;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.categoryName = categoryName;
-    }
 }

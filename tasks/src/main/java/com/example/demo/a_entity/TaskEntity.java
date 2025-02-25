@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @ToString
 public class TaskEntity {
 
@@ -44,28 +46,5 @@ public class TaskEntity {
 
     @Column(name = "due_date")
     private LocalDate dueDate;
-
-    // constructor
-    public TaskEntity(
-        String id,
-        LocalDateTime createdAt,
-        LocalDateTime updatedAt,
-        String taskName,
-        String description,
-        String category,
-        String priority,
-        String status,
-        LocalDate dueDate
-    ) {
-        this.id = id;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.taskName = taskName;
-        this.description = description;
-        this.category = category;
-        this.priority = priority;
-        this.status = status;
-        this.dueDate = dueDate;
-    }
 
 }

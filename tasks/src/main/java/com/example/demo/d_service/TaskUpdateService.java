@@ -86,17 +86,18 @@ public class TaskUpdateService {
         Timestamp nowTimestamp = Timestamp.from(nowUtc.toInstant());
 
         // Save the new task to the DB
-        TaskEntity newTask = new TaskEntity(
-            id.id(),
-            nowTimestamp.toLocalDateTime(),
-            nowTimestamp.toLocalDateTime(),
-            validatedBody.taskName().trim(),
-            validatedBody.description().trim(),
-            validatedBody.category().trim(),
-            validatedBody.priority().trim(),
-            validatedBody.status().trim(),
-            dueDate
-        );
+        TaskEntity newTask = TaskEntity.builder()
+            .id(id.id())
+            .createdAt(nowTimestamp.toLocalDateTime())
+            .updatedAt(nowTimestamp.toLocalDateTime())
+            .taskName(validatedBody.taskName().trim())
+            .description(validatedBody.description().trim())
+            .category(validatedBody.category().trim())
+            .priority(validatedBody.priority().trim())
+            .status(validatedBody.status().trim())
+            .dueDate(dueDate)
+            .build();
+
         taskRepository.save(newTask);
 
         // response (json)

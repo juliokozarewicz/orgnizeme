@@ -59,13 +59,14 @@ public class CategoryCreateService {
         ZonedDateTime nowUtc = ZonedDateTime.now(ZoneOffset.UTC);
         Timestamp nowTimestamp = Timestamp.from(nowUtc.toInstant());
 
-        // Save the new category to the DB
-        CategoryEntity newCategory = new CategoryEntity(
-            generatedUUID,
-            nowTimestamp.toLocalDateTime(),
-            nowTimestamp.toLocalDateTime(),
-            validatedBody.categoryName().trim()
-        );
+        // Create a new CategoryEntity using builder
+        CategoryEntity newCategory = CategoryEntity.builder()
+            .id(generatedUUID)
+            .createdAt(nowTimestamp.toLocalDateTime())
+            .updatedAt(nowTimestamp.toLocalDateTime())
+            .categoryName(validatedBody.categoryName().trim())
+            .build();
+
         categoryRepository.save(newCategory);
 
         // response META
