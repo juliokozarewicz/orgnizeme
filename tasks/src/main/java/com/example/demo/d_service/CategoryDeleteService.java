@@ -2,7 +2,7 @@ package com.example.demo.d_service;
 
 import com.example.demo.a_entity.CategoryEntity;
 import com.example.demo.b_repository.CategoryRepository;
-import com.example.demo.utils.middlewares.ErrorHandler;
+import com.example.demo.f_middlewares.ErrorHandler;
 import com.example.demo.utils.others.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;

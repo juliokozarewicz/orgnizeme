@@ -1,6 +1,6 @@
 package com.example.demo.utils.middlewares;
 
-import com.example.demo.utils.others.StandardResponse;
+import com.example.demo.utils.dtos.StandardResponse;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;

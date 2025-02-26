@@ -2,7 +2,7 @@ package com.example.demo.d_service;
 
 import com.example.demo.a_entity.TaskEntity;
 import com.example.demo.b_repository.TaskRepository;
-import com.example.demo.utils.interfaces.TaskSpecifications;
+import com.example.demo.b_repository.especifications.TaskSpecifications;
 import com.example.demo.utils.others.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -32,7 +32,15 @@ public class TaskListService {
         Locale locale = LocaleContextHolder.getLocale();
 
         // query db
-        Specification<TaskEntity> spec = TaskSpecifications.filterTasks(null);
+        Specification<TaskEntity> spec = TaskSpecifications.filterTasks(
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        );
         List<TaskEntity> allTasks = taskRepository.findAll(spec);
 
         // response META
