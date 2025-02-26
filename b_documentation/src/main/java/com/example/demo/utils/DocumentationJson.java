@@ -896,6 +896,119 @@ public class DocumentationJson {
                                 }
                             }
                         }
+                    },
+                    # ==========================================================
+                    "/tasks/delete/{id}": {
+                        "delete": {
+                            "summary": "Delete Task",
+                            "description": "Deletes a task based on the provided task ID. If the task does not exist, a 404 error will be returned. The request should pass a valid UUID in the path to identify the task to be deleted.",
+                            "tags": [
+                                "TASK"
+                            ],
+                            "parameters": [
+                                {
+                                    "name": "id",
+                                    "in": "path",
+                                    "required": true,
+                                    "description": "The unique identifier of the task to be deleted. The ID must follow the UUID format.",
+                                    "schema": {
+                                        "type": "string",
+                                        "example": "{id}"
+                                    }
+                                }
+                            ],
+                            "responses": {
+                                "200": {
+                                    "description": "Successful response indicating the task was deleted.",
+                                    "content": {
+                                        "application/json": {
+                                            "schema": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "statusCode": {
+                                                        "type": "integer",
+                                                        "example": 200
+                                                    },
+                                                    "statusMessage": {
+                                                        "type": "string",
+                                                        "example": "success"
+                                                    },
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "Task successfully deleted."
+                                                    },
+                                                    "links": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "self": {
+                                                                "type": "string",
+                                                                "example": "/tasks/delete/{id}"
+                                                            },
+                                                            "next": {
+                                                                "type": "string",
+                                                                "example": "/tasks/list"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "404": {
+                                    "description": "Not Found – The task with the specified ID does not exist.",
+                                    "content": {
+                                        "application/json": {
+                                            "schema": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "statusCode": {
+                                                        "type": "integer",
+                                                        "example": 404
+                                                    },
+                                                    "statusMessage": {
+                                                        "type": "string",
+                                                        "example": "error"
+                                                    },
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "Task not found."
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "400": {
+                                    "description": "Bad Request – Validation error on the provided UUID format.",
+                                    "content": {
+                                        "application/json": {
+                                            "schema": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "statusCode": {
+                                                        "type": "integer",
+                                                        "example": 400
+                                                    },
+                                                    "statusMessage": {
+                                                        "type": "string",
+                                                        "example": "error"
+                                                    },
+                                                    "field": {
+                                                        "type": "string",
+                                                        "example": "id"
+                                                    },
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "Invalid UUID format."
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                     # ==========================================================
                     # ==========================================================

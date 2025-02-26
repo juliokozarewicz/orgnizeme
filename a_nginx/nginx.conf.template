@@ -208,6 +208,15 @@ http {
           proxy_set_header X-Forwarded-For proxy_add_x_forwarded_for;
           proxy_set_header X-Forwarded-Proto scheme;
         }
+
+    # [ TASKS -  Delete Task ]
+        location ~ /tasks/delete/([0-9a-zA-Z-]+)$ {
+          proxy_pass http://$PRIVATE_DOMAIN:$TASKS_PORT;
+          proxy_set_header Host host;
+          proxy_set_header X-Real-IP remote_addr;
+          proxy_set_header X-Forwarded-For proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto scheme;
+        }
     # =================================================== (end tasks)
 
   }
