@@ -3,6 +3,7 @@ package com.example.demo.d_service;
 import com.example.demo.a_entity.TaskEntity;
 import com.example.demo.b_repository.TaskRepository;
 import com.example.demo.b_repository.especifications.TaskSpecifications;
+import com.example.demo.c_validation.TaskListValidation;
 import com.example.demo.utils.others.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -26,20 +27,24 @@ public class TaskListService {
     @Autowired
     private TaskRepository taskRepository;
 
-    public ResponseEntity execute() {
+    public ResponseEntity execute(
+
+        TaskListValidation taskListValidation
+
+    ) {
 
         // language
         Locale locale = LocaleContextHolder.getLocale();
 
         // query db
         Specification<TaskEntity> spec = TaskSpecifications.filterTasks(
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
+            taskListValidation.taskName(),
+            taskListValidation.description(),
+            taskListValidation.category(),
+            taskListValidation.priority(),
+            taskListValidation.status(),
+            taskListValidation.initDate(),
+            taskListValidation.endDate()
         );
         List<TaskEntity> allTasks = taskRepository.findAll(spec);
 

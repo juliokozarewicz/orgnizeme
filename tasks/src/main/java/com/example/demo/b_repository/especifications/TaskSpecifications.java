@@ -31,31 +31,38 @@ public class TaskSpecifications {
 
             if (taskName != null) {
                 predicates.add(
-                    criteriaBuilder.equal(root.get("taskName"), taskName)
+                    criteriaBuilder.equal(root.get("taskName"),
+                    taskName.toLowerCase()
+                    )
                 );
             }
 
             if (description != null) {
                 predicates.add(
-                    criteriaBuilder.equal(root.get("description"), description)
+                    criteriaBuilder.equal(root.get("description"),
+                    description.toLowerCase()
+                    )
                 );
             }
 
             if (category != null) {
                 predicates.add(
-                    criteriaBuilder.equal(root.get("description"), category)
+                    criteriaBuilder.equal(root.get("category"),
+                    category.toLowerCase())
                 );
             }
 
             if (priority != null) {
                 predicates.add(
-                    criteriaBuilder.equal(root.get("priority"), priority)
+                    criteriaBuilder.equal(root.get("priority"),
+                    priority.toLowerCase())
                 );
             }
 
             if (status != null) {
                 predicates.add(
-                    criteriaBuilder.equal(root.get("priority"), status)
+                    criteriaBuilder.equal(root.get("status"),
+                    status.toLowerCase())
                 );
             }
 
