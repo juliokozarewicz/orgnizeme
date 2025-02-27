@@ -77,7 +77,7 @@ public class TaskSpecifications {
             if (initDate != null) {
                 predicates.add(
                     criteriaBuilder.greaterThanOrEqualTo(
-                        root.get("initDate"),initDate
+                        root.get("dueDate"),initDate
                     )
                 );
             }
@@ -85,7 +85,7 @@ public class TaskSpecifications {
             if (endDate != null) {
                 predicates.add(
                     criteriaBuilder.lessThanOrEqualTo(
-                        root.get("endDate"),
+                        root.get("dueDate"),
                         endDate
                     )
                 );
