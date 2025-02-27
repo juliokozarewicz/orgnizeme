@@ -1009,8 +1009,201 @@ public class DocumentationJson {
                                 }
                             }
                         }
-                    }
+                    },
                     # ==========================================================
+                    "/tasks/list": {
+                        "get": {
+                            "summary": "List Tasks",
+                            "description": "Fetches a list of tasks based on the provided filters. If no filters are applied, all tasks will be returned. The filters can include task name, description, category, priority, status, and date range (start and end dates).",
+                            "tags": [
+                                "TASK"
+                            ],
+                            "parameters": [
+                                {
+                                    "name": "taskName",
+                                    "in": "query",
+                                    "required": false,
+                                    "description": "Filter tasks by name. The value is a case-insensitive substring.",
+                                    "schema": {
+                                        "type": "string",
+                                        "example": "Task Name"
+                                    }
+                                },
+                                {
+                                    "name": "description",
+                                    "in": "query",
+                                    "required": false,
+                                    "description": "Filter tasks by description. The value is a case-insensitive substring.",
+                                    "schema": {
+                                        "type": "string",
+                                        "example": "Task Description"
+                                    }
+                                },
+                                {
+                                    "name": "category",
+                                    "in": "query",
+                                    "required": false,
+                                    "description": "Filter tasks by category. The value is a case-insensitive substring.",
+                                    "schema": {
+                                        "type": "string",
+                                        "example": "Work"
+                                    }
+                                },
+                                {
+                                    "name": "priority",
+                                    "in": "query",
+                                    "required": false,
+                                    "description": "Filter tasks by priority. The value is a case-insensitive substring.",
+                                    "schema": {
+                                        "type": "string",
+                                        "example": "High"
+                                    }
+                                },
+                                {
+                                    "name": "status",
+                                    "in": "query",
+                                    "required": false,
+                                    "description": "Filter tasks by status. The value is a case-insensitive substring.",
+                                    "schema": {
+                                        "type": "string",
+                                        "example": "Pending"
+                                    }
+                                },
+                                {
+                                    "name": "initDate",
+                                    "in": "query",
+                                    "required": false,
+                                    "description": "Filter tasks by start date. The value should be in the format 'YYYY-MM-DD'.",
+                                    "schema": {
+                                        "type": "string",
+                                        "example": "2025-01-01"
+                                    }
+                                },
+                                {
+                                    "name": "endDate",
+                                    "in": "query",
+                                    "required": false,
+                                    "description": "Filter tasks by end date. The value should be in the format 'YYYY-MM-DD'.",
+                                    "schema": {
+                                        "type": "string",
+                                        "example": "2025-12-31"
+                                    }
+                                }
+                            ],
+                            "responses": {
+                                "200": {
+                                    "description": "Successful response indicating the tasks were retrieved.",
+                                    "content": {
+                                        "application/json": {
+                                            "schema": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "statusCode": {
+                                                        "type": "integer",
+                                                        "example": 200
+                                                    },
+                                                    "statusMessage": {
+                                                        "type": "string",
+                                                        "example": "success"
+                                                    },
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "Tasks successfully retrieved."
+                                                    },
+                                                    "data": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "taskName": {
+                                                                    "type": "string",
+                                                                    "example": "Task Name"
+                                                                },
+                                                                "description": {
+                                                                    "type": "string",
+                                                                    "example": "Task Description"
+                                                                },
+                                                                "category": {
+                                                                    "type": "string",
+                                                                    "example": "Work"
+                                                                },
+                                                                "priority": {
+                                                                    "type": "string",
+                                                                    "example": "High"
+                                                                },
+                                                                "status": {
+                                                                    "type": "string",
+                                                                    "example": "Pending"
+                                                                },
+                                                                "initDate": {
+                                                                    "type": "string",
+                                                                    "example": "2025-01-01"
+                                                                },
+                                                                "endDate": {
+                                                                    "type": "string",
+                                                                    "example": "2025-12-31"
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "meta": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "totalItems": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            }
+                                                        }
+                                                    },
+                                                    "links": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "self": {
+                                                                "type": "string",
+                                                                "example": "/tasks/list"
+                                                            },
+                                                            "next": {
+                                                                "type": "string",
+                                                                "example": "/tasks/update"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "400": {
+                                    "description": "Bad Request – Validation error on the provided filter parameters.",
+                                    "content": {
+                                        "application/json": {
+                                            "schema": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "statusCode": {
+                                                        "type": "integer",
+                                                        "example": 400
+                                                    },
+                                                    "statusMessage": {
+                                                        "type": "string",
+                                                        "example": "error"
+                                                    },
+                                                    "field": {
+                                                        "type": "string",
+                                                        "example": "status"
+                                                    },
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "Cannot be empty."
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                     # ==========================================================
                 }
             }
